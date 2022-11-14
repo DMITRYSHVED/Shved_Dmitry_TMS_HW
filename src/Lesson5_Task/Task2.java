@@ -14,7 +14,12 @@ public class Task2 {
 
         for (int i = 0; i < chessDesk.length; i++) {
             for (int j = 0; j < chessDesk[i].length; j++) {
-                chessDesk[i][j] = (i % 2 == 0 && j % 2 == 0) || (i % 2 == 1 && j % 2 == 1) ? "W" : "B";
+                //chessDesk[i][j] = (i % 2 == 0 && j % 2 == 0) || (i % 2 == 1 && j % 2 == 1) ? "W" : "B";
+                if((i+j)%2==0){
+                    chessDesk[i][j]="W";
+                }else {
+                    chessDesk[i][j]="B";
+                }
                 System.out.print(chessDesk[i][j] + " ");
             }
             System.out.println();
