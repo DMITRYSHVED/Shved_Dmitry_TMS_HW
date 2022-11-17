@@ -1,10 +1,10 @@
-package Lesson7.Task3;
+package Lesson7.Task3.Documents;
 
 import java.util.Date;
 
 public abstract class Document {
-    int documentNumber;
-    Date documentDate;
+    public int documentNumber;
+    public Date documentDate;
 
     public Document(int documentNumber, Date documentDate) {
         this.documentDate = documentDate;

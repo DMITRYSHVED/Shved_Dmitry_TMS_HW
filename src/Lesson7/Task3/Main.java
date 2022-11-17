@@ -1,5 +1,11 @@
 package Lesson7.Task3;
 
+import Lesson7.Task3.Documents.Document;
+import Lesson7.Task3.Documents.EmployeeContract;
+import Lesson7.Task3.Documents.FinancialInvoice;
+import Lesson7.Task3.Documents.SupplyGoodsContract;
+import Lesson7.Task3.Register.Register;
+
 import java.time.Instant;
 import java.util.Date;
 

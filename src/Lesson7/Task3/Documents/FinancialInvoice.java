@@ -1,4 +1,4 @@
-package Lesson7.Task3;
+package Lesson7.Task3.Documents;
 
 import java.util.Date;
 

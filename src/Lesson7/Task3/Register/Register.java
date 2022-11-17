@@ -1,8 +1,10 @@
-package Lesson7.Task3;
+package Lesson7.Task3.Register;
+
+import Lesson7.Task3.Documents.Document;
 
 public class Register implements Registerable {
 
-    Document[] documents = new Document[10];
+    public Document[] documents = new Document[10];
 
     @Override
     public void addDocument(Document document) {
