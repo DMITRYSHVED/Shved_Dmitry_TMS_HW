@@ -7,10 +7,14 @@ public abstract class Document {
     Date documentDate;
 
     public Document(int documentNumber, Date documentDate) {
-        this.documentNumber = documentNumber;
         this.documentDate = documentDate;
+        this.documentNumber = documentNumber;
     }
 
     public Document() {
+    }
+
+    public static int createDocumentNumber() {
+        return (int) Math.abs(Math.random() * 1000000);
     }
 }
