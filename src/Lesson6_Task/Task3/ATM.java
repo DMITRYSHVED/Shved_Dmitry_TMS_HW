@@ -1,4 +1,4 @@
-package Lesson6_Task;
+package Lesson6_Task.Task3;
 
 public class ATM {
     int numOfTwenty;

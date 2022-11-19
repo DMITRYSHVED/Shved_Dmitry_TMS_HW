@@ -1,4 +1,6 @@
-package Lesson6_Task;
+package Lesson6_Task.Task1;
+
+import Lesson6_Task.Task1.CreditCard;
 
 import java.util.ArrayList;
 import java.util.Scanner;
