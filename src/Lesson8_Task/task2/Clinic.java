@@ -14,8 +14,7 @@ public class Clinic {
     }
 
     public TreatmentPlan createTreatmentPlanCode() {
-        TreatmentPlan treatmentPlan = new TreatmentPlan(random.nextInt(4));
-        return treatmentPlan;
+        return new TreatmentPlan(random.nextInt(3));
     }
 
     public void doctorHire(Doctor doctor) {
@@ -60,7 +59,7 @@ public class Clinic {
                     break;
                 }
             }
-            patient.attendingDoctor = doctors[choseDoctor].jobTitle;
+            patient.attendingDoctor = doctors[choseDoctor];
             doctors[choseDoctor].treat();
         } else if (patient.treatmentPlan.treatmentPlanCode == 2) {
             for (int i = 0; i < doctors.length; i++) {
@@ -69,7 +68,7 @@ public class Clinic {
                     break;
                 }
             }
-            patient.attendingDoctor = doctors[choseDoctor].jobTitle;
+            patient.attendingDoctor = doctors[choseDoctor];
             doctors[choseDoctor].treat();
         } else {
             for (int i = 0; i < doctors.length; i++) {
@@ -78,7 +77,7 @@ public class Clinic {
                     break;
                 }
             }
-            patient.attendingDoctor = doctors[choseDoctor].jobTitle;
+            patient.attendingDoctor = doctors[choseDoctor];
             doctors[choseDoctor].treat();
         }
     }
