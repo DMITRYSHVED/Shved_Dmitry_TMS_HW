@@ -61,6 +61,7 @@ public class University {
         student.setFaculty(faculties.get(random.nextInt(5)));
         student.setId(studentId);
         student.addStudentSubject(student.getFaculty());
+        student.addStudentTeachers(student.getFaculty());
         students.add(student);
         studentId++;
     }
@@ -104,9 +105,9 @@ public class University {
         for (int i = 0; i < students.size(); i++) {
             for (int j = 0; j < students.get(i).faculty.facultyTeachers.size(); j++) {
                 if (students.get(i).getName().equals(name) &&
-                        students.get(i).faculty.facultyTeachers.get(j).getName().equals(teacherName) &&
-                        students.get(i).faculty.facultyTeachers.get(j).getSurname().equals(teacherSurname) &&
-                        students.get(i).faculty.facultyTeachers.get(j).getPatronymic().equals(teacherPatronymic)) {
+                        students.get(i).studentTeachers.get(j).getName().equals(teacherName) &&
+                        students.get(i).studentTeachers.get(j).getSurname().equals(teacherSurname) &&
+                        students.get(i).studentTeachers.get(j).getPatronymic().equals(teacherPatronymic)) {
                     System.out.println(students.get(i));
                 }
             }
@@ -169,17 +170,6 @@ public class University {
         }
     }
 
-    private String putMark(int currentStudentId, int subjectId) {
-        String subjectName = null;
-        for (int i = 0; i < students.get(currentStudentId).studentSubjects.size(); i++) {
-            if (students.get(currentStudentId).studentSubjects.get(i).getId() == subjectId) {
-                subjectName = students.get(currentStudentId).studentSubjects.get(i).getName();
-                break;
-            }
-        }
-        return subjectName;
-    }
-
     public int getFunction() {
         System.out.println("1- прием студента   2- отчисление студента  4- работать со студентом\n" +
                 "3- поиск студента   0- выход из программы");
@@ -226,50 +216,6 @@ public class University {
         }
     }
 
-    private void showTeachersInfo(int currentStudentId) {
-        System.out.println();
-        System.out.println("Список преподавателей");
-        for (int i = 0; i < students.get(currentStudentId).faculty.facultyTeachers.size(); i++) {
-            System.out.println("\t" + students.get(currentStudentId).faculty.facultyTeachers.get(i));
-        }
-    }
-
-    private void showSubjectInfo(int currentStudentId) {
-        System.out.println();
-        System.out.println("Список предметов");
-        for (int i = 0; i < students.get(currentStudentId).studentSubjects.size(); i++) {
-            System.out.println("\t" + students.get(currentStudentId).studentSubjects.get(i));
-        }
-    }
-
-    private void putMarkMethod(int currentStudentId) {
-        int subjectId;
-        int mark;
-        System.out.println("Введите порядковый номер предмета, по которому хотите поставить оценку");
-        while (!scanner.hasNextInt()) {
-            System.out.println("Нужно число попробуй еще");
-            scanner.next();
-        }
-        subjectId = scanner.nextInt();
-        System.out.println("Введите оценку, которую хотите поставить студенту: ");
-        while (!scanner.hasNextInt()) {
-            System.out.println("Нужно число попробуй еще");
-            scanner.next();
-        }
-        mark = scanner.nextInt();
-        Mark markToAdd = new Mark(putMark(currentStudentId, subjectId), mark);
-        if (markToAdd.subjectName != null) {
-            students.get(currentStudentId).studentMarks.add(markToAdd);
-        }
-    }
-
-    private void showMarksInfo(int currentStudentId) {
-        System.out.println("Оценки студента " + students.get(currentStudentId).getName());
-        for (int i = 0; i < students.get(currentStudentId).studentMarks.size(); i++) {
-            System.out.println(students.get(currentStudentId).studentMarks.get(i));
-        }
-    }
-
     private void workWithStudent() {
         int currentStudentId;
         while (true) {
@@ -305,14 +251,14 @@ public class University {
             }
             function = scanner.nextInt();
             if (function == 1) {
-                showTeachersInfo(currentStudentId);
+                students.get(currentStudentId).showTeachersInfo();
             } else if (function == 2) {
-                showSubjectInfo(currentStudentId);
+                students.get(currentStudentId).showSubjectsInfo();
             } else if (function == 3) {
-                showSubjectInfo(currentStudentId);
-                putMarkMethod(currentStudentId);
+                students.get(currentStudentId).showSubjectsInfo();
+                students.get(currentStudentId).gradeMarkMethod();
             } else if (function == 4) {
-                showMarksInfo(currentStudentId);
+                students.get(currentStudentId).showMarksInfo();
             } else {
                 break;
             }
