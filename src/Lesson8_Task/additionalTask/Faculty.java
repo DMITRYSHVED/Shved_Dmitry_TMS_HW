@@ -6,8 +6,8 @@ public class Faculty {
 
     private String name;
     private int id;
-    ArrayList<Teacher> facultyTeachers = new ArrayList<>();
-    ArrayList<Subject> facultySubjects = new ArrayList<>();
+    private ArrayList<Teacher> facultyTeachers = new ArrayList<>();
+    private ArrayList<Subject> facultySubjects = new ArrayList<>();
 
     public Faculty(String name) {
         this.name = name;
@@ -23,6 +23,14 @@ public class Faculty {
 
     public int getId() {
         return id;
+    }
+
+    public ArrayList<Teacher> getFacultyTeachers() {
+        return facultyTeachers;
+    }
+
+    public ArrayList<Subject> getFacultySubjects() {
+        return facultySubjects;
     }
 
     public void addTeacherToFaculty(Teacher... teachers) {

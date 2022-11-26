@@ -7,11 +7,11 @@ public class Teacher {
     private String name;
     private String surname;
     private String patronymic;
-    TeacherSpecialization teacherSpecialization;
+    private TeacherSpecialization teacherSpecialization;
     private int id;
 
-    ArrayList<Subject> teacherSubjects = new ArrayList<>();
-    ArrayList<Faculty> teacherFaculties = new ArrayList<>();
+    private ArrayList<Subject> teacherSubjects = new ArrayList<>();
+    private ArrayList<Faculty> teacherFaculties = new ArrayList<>();
 
     public Teacher(String name, String surname, String patronymic, TeacherSpecialization teacherSpecialization) {
         this.name = name;

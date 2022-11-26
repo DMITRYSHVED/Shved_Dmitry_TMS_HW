@@ -57,7 +57,6 @@ public class University {
         student.inputSurname();
         student.inputPatronymic();
         student.inputCourse();
-        student.setCourse(random.nextInt(1, 5));
         student.setFaculty(faculties.get(random.nextInt(5)));
         student.setId(studentId);
         student.addStudentSubject(student.getFaculty());
@@ -103,11 +102,11 @@ public class University {
 
     private void findStudent(String name, String teacherName, String teacherSurname, String teacherPatronymic) {
         for (int i = 0; i < students.size(); i++) {
-            for (int j = 0; j < students.get(i).faculty.facultyTeachers.size(); j++) {
+            for (int j = 0; j < students.get(i).getStudentTeachers().size(); j++) {
                 if (students.get(i).getName().equals(name) &&
-                        students.get(i).studentTeachers.get(j).getName().equals(teacherName) &&
-                        students.get(i).studentTeachers.get(j).getSurname().equals(teacherSurname) &&
-                        students.get(i).studentTeachers.get(j).getPatronymic().equals(teacherPatronymic)) {
+                        students.get(i).getStudentTeachers().get(j).getName().equals(teacherName) &&
+                        students.get(i).getStudentTeachers().get(j).getSurname().equals(teacherSurname) &&
+                        students.get(i).getStudentTeachers().get(j).getPatronymic().equals(teacherPatronymic)) {
                     System.out.println(students.get(i));
                 }
             }

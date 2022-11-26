@@ -11,13 +11,13 @@ public class Student {
     private String name;
     private String surname;
     private String patronymic;
-    Faculty faculty;
+    private Faculty faculty;
     private int course;
     private int id;
 
-    ArrayList<Subject> studentSubjects = new ArrayList<>();
-    ArrayList<Mark> studentMarks = new ArrayList<>();
-    ArrayList<Teacher> studentTeachers = new ArrayList<>();
+    private ArrayList<Subject> studentSubjects = new ArrayList<>();
+    private ArrayList<Mark> studentMarks = new ArrayList<>();
+    private ArrayList<Teacher> studentTeachers = new ArrayList<>();
 
     public void setName(String name) {
         this.name = name;
@@ -67,6 +67,18 @@ public class Student {
         return id;
     }
 
+    public ArrayList<Subject> getStudentSubjects() {
+        return studentSubjects;
+    }
+
+    public ArrayList<Mark> getStudentMarks() {
+        return studentMarks;
+    }
+
+    public ArrayList<Teacher> getStudentTeachers() {
+        return studentTeachers;
+    }
+
     public void inputName() {
         System.out.println("Введите имя студента:");
         setName(scanner.next());
@@ -93,11 +105,11 @@ public class Student {
     }
 
     public void addStudentSubject(Faculty faculty) {
-        studentSubjects.addAll(faculty.facultySubjects);
+        studentSubjects.addAll(faculty.getFacultySubjects());
     }
 
     public void addStudentTeachers(Faculty faculty){
-        studentTeachers.addAll(faculty.facultyTeachers);
+        studentTeachers.addAll(faculty.getFacultyTeachers());
     }
 
     public String gradeMark(int subjectId) {
