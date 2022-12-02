@@ -20,8 +20,6 @@ package Lesson9_Task.Task1;
 public class Test {
     public static void main(String[] args) {
 
-        OptionsThreeD optionsThreeD = new OptionsThreeD();
-        OptionsTwoD optionsTwoD = new OptionsTwoD();
         VectorTwoD vectorTwoD = new VectorTwoD(7,9);
         VectorThreeD vectorThreeD = new VectorThreeD(12,16,7);
         VectorThreeD vectorThreeD1 = new VectorThreeD(13,23,10);
