@@ -35,27 +35,27 @@ public class DocumentNumberOptions {
         System.out.println(onlyLetters);
     }
 
-    public static void abcAvailability(String str) {
+    public static void abcAvailability(String str) throws AbcException {
         if (str.contains("abc") || str.contains("ABC")) {
-            System.out.println("Документ содержит комбинацию букв 'abc'");
+            throw new AbcException("УСТРАНИ ОШИБКУ И ПОПРОБУЙ ЕЩЕ");
         } else {
             System.out.println("Документ не содержит комбинацию букв 'abc'");
         }
     }
 
-    public static void startWithCombination(String str) {
+    public static void startWithCombination(String str) throws NumberCombinationException {
         String combination = "555";
         if (str.startsWith(combination)) {
-            System.out.println("Номер начинается с последовательности цифр '" + combination + "'");
+            throw new NumberCombinationException("УСТРАНИ ОШИБКУ И ПОПРОБУЙ ЕЩЕ");
         } else {
             System.out.println("Номер не начинается с последовательности цифр '" + combination + "'");
         }
     }
 
-    public static void endWithCombination(String str) {
+    public static void endWithCombination(String str) throws SymbolsCombinationException {
         String combination = "1a2b";
         if (str.endsWith(combination)) {
-            System.out.println("Номер заканчивается последовательностью цифр '" + combination + "'");
+            throw new SymbolsCombinationException("УСТРАНИ ОШИБКУ И ПОПРОБУЙ ЕЩЕ");
         } else {
             System.out.println("Номер не заканчивается последовательностью цифр '" + combination + "'");
         }
