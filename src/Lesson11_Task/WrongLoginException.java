@@ -8,4 +8,5 @@ public class WrongLoginException extends RegistrationException {
     public WrongLoginException(String message) {
         super(message);
     }
+
 }

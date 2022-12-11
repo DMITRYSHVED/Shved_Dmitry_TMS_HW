@@ -25,9 +25,12 @@ public class Registration {
                 }
             }
         } catch (RegistrationException ex) {
+            ex.initCause(new Throwable("Логин и пароль должны содержать менее 20-ти символов," +
+                    "и не иметь пробела"));
             regStatus = false;
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
+//            System.err.println(ex.getMessage());
+//            ex.printStackTrace();
+            System.err.println(ex.getCause());
         }
         return regStatus;
     }

@@ -3,7 +3,7 @@ package Lesson11_Task;
 public class RegistrationException extends Exception {
 
     private String message;
-
+    private Throwable cause ;
     public RegistrationException() {
     }
 
@@ -11,8 +11,8 @@ public class RegistrationException extends Exception {
         this.message = message;
     }
 
-    @Override
-    public String getMessage() {
-        return message;
+    public RegistrationException(String message, Throwable cause) {
+        super(message, cause);
     }
+
 }
