@@ -23,7 +23,7 @@ public class Test {
 
     public static void main(String[] args) {
 
-        System.out.println(Registration.logIn("Дмитрий", "фффф2", "фффф1"));
+        System.out.println(Registration.logIn("Дм итрий", "фффф2", "фффф1"));
 
     }
 }
