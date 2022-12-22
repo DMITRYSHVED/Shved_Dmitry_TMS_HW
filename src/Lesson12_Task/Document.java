@@ -1,84 +1,91 @@
 package Lesson12_Task;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 //FILE.separator
+
 public class Document {
 
     public static final String DOCNUM = "docnum";
     public static final String CONTRACT = "contract";
-    private static String invalidDescription;
+    public static final String VALID = "<VALID>";
+    public static final String INVALID = "<INVALID>";
+    private static String comment;
     private static Scanner scanner = new Scanner(System.in);
     private static File file;
-    private static File validFile;
-    private static File invalidFile;
-    private static ArrayList<String> invalidNumbers = new ArrayList<>();
-    private static ArrayList<String> validNumbers = new ArrayList<>();
+    private static File reportFile;
+    private static ArrayList<File> files = new ArrayList<>();
+    private static HashSet<String> uniqueDocumentNumbers = new HashSet<>();
+    private static HashMap<String, String> processedDocumentNumbers = new HashMap<>();
 
-    private static File goToFile() throws IOException {
+    private static ArrayList<File> goToFile() throws IOException {
 
-        System.out.println("Введите путь к документу: ");
-        String path = scanner.nextLine();
-        file = new File(path);
-        if (!file.exists()) {
-            file.createNewFile();
+        while (true) {
+            System.out.println("Введите путь к документу: \n0- выход");
+            String path = scanner.nextLine();
+            if (path.equals("0")) {
+                break;
+            }
+            file = new File(path);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            files.add(file);
         }
-        return file;
+        return files;
     }
 
-    private static void documentValid(File file) throws IOException {
+    private static void uniqueDocument(ArrayList<File> files) throws IOException {
 
         String documentNumber;
-        Reader reader = new FileReader(file);
 
-        try (reader) {
-            BufferedReader bufferedReader = new BufferedReader(reader);
-            System.out.println("DOCUMENT_NUMBERS");
-            while ((documentNumber = bufferedReader.readLine()) != null) {
-                documentNumber = documentNumber.trim();
-                if (documentNumber.equals(file.getName()) || documentNumber.isEmpty()) {
-                    continue;
+        for (int i = 0; i < files.size(); i++) {
+            Reader reader = new FileReader(files.get(i));
+            try (reader) {
+                BufferedReader bufferedReader = new BufferedReader(reader);
+                while ((documentNumber = bufferedReader.readLine()) != null) {
+                    if (documentNumber.isEmpty()) {
+                        continue;
+                    }
+                    uniqueDocumentNumbers.add(documentNumber);
                 }
-                System.out.println("\t" + documentNumber);
-                try {
-                    checkDocumentNumber(documentNumber);
-                } catch (DocumentInvalidException e) {
-                    System.err.println(e.getMessage());
-                }
+                bufferedReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            bufferedReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        validReportFile(validNumbers);
-        invalidReportFile(invalidNumbers);
+        for (String uniqueNumber : uniqueDocumentNumbers) {
+            try {
+                checkDocumentNumber(uniqueNumber);
+            } catch (
+                    DocumentInvalidException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        writeToReportFile(processedDocumentNumbers);
     }
 
-    private static void checkDocumentNumber(String documentNumber) throws DocumentInvalidException {
+    private static void checkDocumentNumber(String uniqueNumber) throws DocumentInvalidException {
 
-        if (documentNumber.length() == 15) {
-            if (documentNumber.startsWith(DOCNUM) || documentNumber.startsWith(CONTRACT)) {
-                validNumbers.add(documentNumber);
+        if (uniqueNumber.length() == 15) {
+            if (uniqueNumber.startsWith(DOCNUM) || uniqueNumber.startsWith(CONTRACT)) {
+                comment = VALID;
+                processedDocumentNumbers.put(uniqueNumber, comment);
             } else {
-                invalidDescription = WrongStartCombinationException.DESCRIPTION;
-                documentNumber = documentNumber + invalidDescription;
-                invalidNumbers.add(documentNumber);
-                throw new WrongStartCombinationException(DocumentInvalidException.INVALID + documentNumber);
+                comment = INVALID + WrongStartCombinationException.DESCRIPTION;
+                processedDocumentNumbers.put(uniqueNumber, comment);
+                throw new WrongStartCombinationException(DocumentInvalidException.INVALID + uniqueNumber + comment);
             }
         } else {
-            if (documentNumber.startsWith(DOCNUM) || documentNumber.startsWith(CONTRACT)) {
-                invalidDescription = WrongDocumentLengthException.DESCRIPTION;
-                documentNumber = documentNumber + invalidDescription;
-                invalidNumbers.add(documentNumber);
-                throw new WrongDocumentLengthException(DocumentInvalidException.INVALID + documentNumber);
+            if (uniqueNumber.startsWith(DOCNUM) || uniqueNumber.startsWith(CONTRACT)) {
+                comment = INVALID + WrongDocumentLengthException.DESCRIPTION;
+                processedDocumentNumbers.put(uniqueNumber, comment);
+                throw new WrongDocumentLengthException(DocumentInvalidException.INVALID + uniqueNumber + comment);
             } else {
-                invalidDescription = WrongDocumentLengthException.DESCRIPTION +
-                        WrongStartCombinationException.DESCRIPTION;
-                documentNumber = documentNumber + invalidDescription;
-                invalidNumbers.add(documentNumber);
-                throw new DocumentInvalidException(DocumentInvalidException.INVALID + documentNumber);
+                comment = INVALID + WrongDocumentLengthException.DESCRIPTION + WrongStartCombinationException.DESCRIPTION;
+                processedDocumentNumbers.put(uniqueNumber, comment);
+                throw new DocumentInvalidException(DocumentInvalidException.INVALID + uniqueNumber + comment);
             }
         }
     }
@@ -86,40 +93,23 @@ public class Document {
     public static void showDocument() {
 
         try {
-            documentValid(goToFile());
-        } catch (Exception e) {
+            uniqueDocument(goToFile());
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private static void validReportFile(ArrayList<String> validNumbers) throws IOException {
+    private static void writeToReportFile(HashMap<String, String> processedDocumentNumbers) throws IOException {
 
-        validFile = new File("VALID_REPORT_FILE");
-        if (!validFile.exists()) {
-            validFile.createNewFile();
+        reportFile = new File("REPORT_FILE");
+        if (!reportFile.exists()) {
+            reportFile.createNewFile();
         }
-        Writer writer = new FileWriter(validFile);
+        Writer writer = new FileWriter(reportFile);
         try (writer) {
-            writer.write(validFile.getName() + "\n");
-            for (String validNumber : validNumbers) {
-                writer.write("\n\t" + validNumber);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void invalidReportFile(ArrayList<String> invalidNumbers) throws IOException {
-
-        invalidFile = new File("INVALID_REPORT_FILE");
-        if (!invalidFile.exists()) {
-            invalidFile.createNewFile();
-        }
-        Writer writer = new FileWriter(invalidFile);
-        try (writer) {
-            writer.write(invalidFile.getName() + "\n");
-            for (String invalidNumber : invalidNumbers) {
-                writer.write("\n\t" + invalidNumber);
+            writer.write(reportFile.getName() + "\n");
+            for (Map.Entry<String, String> documentNumber : processedDocumentNumbers.entrySet()) {
+                writer.write("\n\t" + documentNumber.getKey() +" " +documentNumber.getValue());
             }
         } catch (IOException e) {
             e.printStackTrace();
