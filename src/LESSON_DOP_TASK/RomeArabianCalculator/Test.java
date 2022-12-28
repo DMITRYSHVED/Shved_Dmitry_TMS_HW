@@ -1,4 +1,4 @@
-package LESSON_DOP_TASK;
+package LESSON_DOP_TASK.RomeArabianCalculator;
 
 /**
  * Создать частотный словарь.
@@ -12,7 +12,6 @@ public class Test {
 
     public static void main(String[] args) {
 
-        FrequencyDictionary.showResult();
-        RomeArabianCalculator.showMenu();
+        RomeArabianCalculator.run();
     }
 }
